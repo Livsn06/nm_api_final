@@ -25,11 +25,11 @@ class PlantTreatment extends Model
 
     public function plant()
     {
-        return $this->hasOne(Plant::class);
+        return $this->hasMany(Plant::class);
     }
 
     public function treatment()
     {
-        return $this->hasOne(Ailment::class);
+        return $this->belongsTo(Ailment::class, Ailment::COLUMN_ID, PlantTreatment::COLUMN_TREATMENT_ID);
     }
 }

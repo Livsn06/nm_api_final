@@ -22,4 +22,14 @@ class RemedyIngredient extends Model
         self::COLUMN_INGREDIENT_ID,
         self::COLUMN_DESCRIPTION
     ];
+
+    public function remedy()
+    {
+        return $this->belongsTo(Remedy::class, Remedy::COLUMN_ID, RemedyIngredient::COLUMN_REMEDY_ID);
+    }
+
+    public function ingredient()
+    {
+        return $this->belongsTo(Ingredient::class,  Ingredient::COLUMN_ID, RemedyIngredient::COLUMN_INGREDIENT_ID);
+    }
 }

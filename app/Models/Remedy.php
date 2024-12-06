@@ -18,6 +18,7 @@ class Remedy extends Model
     public const COLUMN_DESCRIPTION = 'description';
     public const COLUMN_STEP = 'step';
     public const COLUMN_STATUS = 'status';
+    public const COLUMN_USAGE = 'usage_remedy';
     public const COLUMN_SIDE_EFFECT = 'side_effect';
     public const COLUMN_IMAGE = 'image';
 
@@ -30,6 +31,12 @@ class Remedy extends Model
         self::COLUMN_STEP,
         self::COLUMN_STATUS,
         self::COLUMN_SIDE_EFFECT,
+        self::COLUMN_USAGE,
         self::COLUMN_IMAGE
     ];
+
+    public function treatments()
+    {
+        return $this->hasMany(RemedyTreatment::class);
+    }
 }

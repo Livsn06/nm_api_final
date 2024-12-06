@@ -14,7 +14,7 @@ class PlantController extends Controller
      */
     public function index()
     {
-        $plants = Plant::all();
+        $plants = Plant::with("treatments")->get();
         return response()->json(['message' => 'Plant fetch successfully', 'data' => $plants], 200);
     }
 

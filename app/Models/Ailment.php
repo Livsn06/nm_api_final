@@ -24,4 +24,13 @@ class Ailment extends Model
         self::COLUMN_TYPE,
         self::COLUMN_DESCRIPTION,
     ];
+
+    public function remedies()
+    {
+        return $this->hasMany(RemedyTreatment::class);
+    }
+    public function plants()
+    {
+        return $this->hasMany(PlantTreatment::class);
+    }
 }

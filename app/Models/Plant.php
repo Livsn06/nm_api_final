@@ -36,4 +36,9 @@ class Plant extends Model
         self::COLUMN_STATUS,
         self::COLUMN_ADMIN
     ];
+
+    public function treatments()
+    {
+        return $this->hasMany(PlantTreatment::class);
+    }
 }

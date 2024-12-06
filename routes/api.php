@@ -8,13 +8,10 @@ use App\Http\Controllers\PlantController;
 use App\Http\Controllers\PlantTreatmentController;
 use App\Http\Controllers\RemedyController;
 use App\Http\Controllers\RemedyIngredientController;
+use App\Http\Controllers\RemedyPlantController;
+use App\Http\Controllers\RemedyTreatmentController;
 use App\Http\Controllers\UserController;
-use App\Models\RemedyIngredient;
 use Illuminate\Support\Facades\Route;
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
 
 
 
@@ -39,15 +36,17 @@ Route::prefix('v1')->group(function () {
         //
         Route::apiResource('ailments', AilmentController::class);
         Route::apiResource('plants/treatments', PlantTreatmentController::class);
+        Route::apiResource('remedies/treatments', RemedyTreatmentController::class);
 
         //
         Route::post('/images/image', [ImageController::class, 'path']);
 
         //
         Route::apiResource('ingredients', IngredientController::class);
+        Route::apiResource('remedies/ingredients', RemedyIngredientController::class);
 
-        Route::prefix('remedies')->group(function () {
-            Route::apiResource('ingredients', RemedyIngredientController::class);
-        });
+
+        // 
+        Route::apiResource('remedies/plantTags', RemedyPlantController::class);
     });
 });

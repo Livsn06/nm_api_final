@@ -13,7 +13,7 @@ class RemedyController extends Controller
      */
     public function index()
     {
-        $remedies = Remedy::all();
+        $remedies = Remedy::with("treatments")->get();
         return response()->json(['message' => 'Remedy fetch successfully', 'data' => $remedies], 200);
     }
 
@@ -34,8 +34,8 @@ class RemedyController extends Controller
             Remedy::COLUMN_STATUS => $request['status'] ?? null,
             Remedy::COLUMN_STEP => $request['step'] ?? null,
             Remedy::COLUMN_SIDE_EFFECT => $request['side_effect'] ?? null,
+            Remedy::COLUMN_USAGE => $request['usage_remedy'] ?? null,
             Remedy::COLUMN_IMAGE => $imagePaths ?? null,
-
         ]);
 
         return response()->json(['message' => 'Remedy created successfully', 'data' => $remedy], 200);

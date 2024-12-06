@@ -14,7 +14,7 @@ class RemedyIngredientController extends Controller
     public function index()
     {
         $remedyIngredients = RemedyIngredient::all();
-        return response()->json(['message' => 'RemedyIngredient fetch successfully', 'data' => $remedyIngredients]);
+        return response()->json(['message' => 'RemedyIngredient fetch successfully', 'data' => $remedyIngredients], 200);
     }
 
     /**
@@ -24,7 +24,7 @@ class RemedyIngredientController extends Controller
     {
         $request->validated();
         $remedyIngredient = RemedyIngredient::create($request->all());
-        return response()->json(['message' => 'RemedyIngredient created successfully', 'data' => $remedyIngredient]);
+        return response()->json(['message' => 'RemedyIngredient created successfully', 'data' => $remedyIngredient], 200);
     }
 
     /**
@@ -32,7 +32,7 @@ class RemedyIngredientController extends Controller
      */
     public function show(RemedyIngredient $remedyIngredient)
     {
-        return response()->json(['message' => 'RemedyIngredient fetch successfully', 'data' => $remedyIngredient]);
+        return response()->json(['message' => 'RemedyIngredient fetch successfully', 'data' => $remedyIngredient], 200);
     }
 
     /**
@@ -42,7 +42,7 @@ class RemedyIngredientController extends Controller
     {
         $request->validated();
         $remedyIngredient->update($request->all());
-        return response()->json(['message' => 'RemedyIngredient updated successfully']);
+        return response()->json(['message' => 'RemedyIngredient updated successfully'], 201);
     }
 
     /**
@@ -51,6 +51,6 @@ class RemedyIngredientController extends Controller
     public function destroy(RemedyIngredient $remedyIngredient)
     {
         $remedyIngredient->delete();
-        return response()->json(['message' => 'RemedyIngredient deleted successfully']);
+        return response()->json(['message' => 'RemedyIngredient deleted successfully'], 201);
     }
 }

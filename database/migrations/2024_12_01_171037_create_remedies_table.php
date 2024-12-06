@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string(Remedy::COLUMN_DESCRIPTION)->nullable();
             $table->string(Remedy::COLUMN_STATUS)->nullable();
             $table->json(Remedy::COLUMN_STEP)->nullable();
+            $table->json(Remedy::COLUMN_USAGE)->nullable();
             $table->json(Remedy::COLUMN_SIDE_EFFECT)->nullable();
             $table->json(Remedy::COLUMN_IMAGE)->nullable();
 
