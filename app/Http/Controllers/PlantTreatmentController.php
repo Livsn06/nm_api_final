@@ -13,7 +13,8 @@ class PlantTreatmentController extends Controller
      */
     public function index()
     {
-        $plantTreatments = PlantTreatment::with('plant', 'treatment')->get();
+        $plantTreatments = PlantTreatment::all();
+
         return response()->json(['message' => 'PlantTreatment fetch successfully', 'data' => $plantTreatments]);
     }
 

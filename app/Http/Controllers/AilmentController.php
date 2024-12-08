@@ -53,4 +53,20 @@ class AilmentController extends Controller
         $ailment->delete();
         return response()->json(['message' => 'Ailment deleted successfully'], 201);
     }
+
+    static function getAilmentByID($id)
+    {
+        $ailment = Ailment::find($id);
+        return $ailment;
+    }
+
+
+    static function ailmentToArray($treatmentList)
+    {
+        $data = $treatmentList->map(function ($treatment) {
+            return AilmentController::getAilmentByID($treatment->treatment_id);
+        });
+
+        return $data;
+    }
 }

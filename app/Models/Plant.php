@@ -41,4 +41,14 @@ class Plant extends Model
     {
         return $this->hasMany(PlantTreatment::class);
     }
+
+    public function remedy_plants()
+    {
+        return $this->hasMany(RemedyPlant::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }

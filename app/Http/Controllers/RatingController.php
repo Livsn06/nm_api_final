@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rating;
 use App\Http\Requests\StoreRatingRequest;
 use App\Http\Requests\UpdateRatingRequest;
+use App\Models\User;
 
 class RatingController extends Controller
 {
@@ -52,5 +53,28 @@ class RatingController extends Controller
     {
         $rating->delete();
         return response()->json(['message' => 'Rating deleted successfully']);
+    }
+
+
+    static function getRating($ratings)
+    {
+
+        $data = $ratings->map(function ($rating) {
+
+            return [
+                'id' => $rating->id,
+                'rate' => $rating->rate,
+                'users' => UserController::getUserByID($rating->user_id),
+            ];
+        });
+        return  $data;
+    }
+
+    static function getAverageRating($ratings)
+    {
+        $data = $ratings->map(function ($rating) {
+            return $rating->rate;
+        });
+        return  $data->avg();
     }
 }

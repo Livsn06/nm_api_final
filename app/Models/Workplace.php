@@ -15,8 +15,9 @@ class Workplace extends Model
     public const COLUMN_ID = 'id';
     public const COLUMN_WORKPLACE_NAME = 'workplace_name';
     public const COLUMN_PLANT_ADDITION_ID = 'plant_addition_id';
-    public const COLUMN_PLANT_ID = 'plant_id';
+    public const COLUMN_WORK_ID = 'work_id';
     public const COLUMN_ADMIN_ID = 'admin_id';
+    public const COLUMN_STATUS = 'status';
 
 
 
@@ -25,7 +26,8 @@ class Workplace extends Model
     protected $fillable = [
         self::COLUMN_WORKPLACE_NAME,
         self::COLUMN_PLANT_ADDITION_ID,
-        self::COLUMN_PLANT_ID,
-        self::COLUMN_ADMIN_ID
+        self::COLUMN_WORK_ID,
+        self::COLUMN_ADMIN_ID,
+        self::COLUMN_STATUS
     ];
 }

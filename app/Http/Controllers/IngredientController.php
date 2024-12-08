@@ -6,6 +6,8 @@ use App\Models\Ingredient;
 use App\Http\Requests\StoreIngredientRequest;
 use App\Http\Requests\UpdateIngredientRequest;
 
+use function PHPSTORM_META\map;
+
 class IngredientController extends Controller
 {
     /**
@@ -52,5 +54,45 @@ class IngredientController extends Controller
     {
         $ingredient->delete();
         return response()->json(['message' => 'Ingredient deleted successfully']);
+    }
+
+
+
+    static function getRemedyIngredients($ingredients)
+    {
+        // "remedy_ingredients": [
+        //         {
+        //             "id": 1,
+        //             "remedy_id": 1,
+        //             "ingredient_id": 3,
+        //             "description": "add 2 teaspoon of sugar",
+        //             "created_at": "2024-12-05T23:18:11.000000Z",
+        //             "updated_at": "2024-12-05T23:18:11.000000Z"
+        //         },
+        //         {
+        //             "id": 2,
+        //             "remedy_id": 1,
+        //             "ingredient_id": 4,
+        //             "description": "add pepper based in your taste",
+        //             "created_at": "2024-12-05T23:18:14.000000Z",
+        //             "updated_at": "2024-12-05T23:18:14.000000Z"
+        //         }
+        //     ],
+
+        $ingredient = $ingredients->map(function ($ingredient) {
+            return IngredientController::getIngredientById($ingredient->ingredient_id);
+        });
+        return $ingredient;
+    }
+
+
+    static function getIngredientById($id)
+    {
+        $ingredient = Ingredient::find($id);
+        $data = [
+            Ingredient::COLUMN_ID => $ingredient->id,
+            Ingredient::COLUMN_NAME => $ingredient->name
+        ];
+        return $data;
     }
 }

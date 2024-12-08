@@ -2,7 +2,7 @@
 
 use App\Models\Like;
 use App\Models\Plant;
-use App\Models\PlantLike;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,10 +14,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create(PlantLike::TABLE_NAME, function (Blueprint $table) {
+        Schema::create(Like::TABLE_NAME, function (Blueprint $table) {
             $table->id();
-            $table->foreignId(PlantLike::COLUMN_PLANT_ID)->constrained(Plant::TABLE_NAME)->onDelete('cascade');
-            $table->foreignId(PlantLike::COLUMN_LIKE_ID)->constrained(Like::TABLE_NAME)->onDelete('cascade');
+            $table->unsignedInteger(Like::COLUMN_LIKE)->default(1)->nullable(false);
+            $table->foreignId(Like::COLUMN_PLANT_ID)->constrained(Plant::TABLE_NAME)->onDelete('cascade');
+            $table->foreignId(Like::COLUMN_USER_ID)->constrained(User::TABLE_NAME)->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists(PlantLike::TABLE_NAME);
+        Schema::dropIfExists(Like::TABLE_NAME);
     }
 };

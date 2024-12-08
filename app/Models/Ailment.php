@@ -33,4 +33,9 @@ class Ailment extends Model
     {
         return $this->hasMany(PlantTreatment::class);
     }
+
+    public function plant_treatments()
+    {
+        return $this->hasMany(PlantTreatment::class);
+    }
 }

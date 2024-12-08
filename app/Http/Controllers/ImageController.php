@@ -65,6 +65,48 @@ class ImageController extends Controller
             ], 500);
         }
     }
+
+    static public function imageFullPath($images)
+    {
+        $images = json_decode($images);
+        $images = collect($images)->map(function ($image) {
+            return asset('storage/' . $image);
+        });
+
+        return $images->all();
+    }
+
+
+    static public function imagePathToMemory($images)
+    {
+
+        $images = json_decode($images);
+        $images = collect($images);
+        $images = $images->map(function ($image) {
+
+            // Construct the full path to the image file
+            $fullPath = storage_path('app/public/' . $image);
+
+            // Check if the file exists
+            if (!file_exists($fullPath)) {
+                return null;
+            }
+
+            // Get the file content and encode it in base64
+            $imageData = base64_encode(file_get_contents($fullPath));
+
+            // Get the MIME type of the file
+            $mimeType = mime_content_type($fullPath);
+
+            return [
+                'file_name' => $image,
+                'mime_type' => $mimeType,
+                'image_data' => $imageData,
+            ];
+        });
+
+        return $images;
+    }
     // public function path($imageName)
     // {
 

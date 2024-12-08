@@ -14,6 +14,7 @@ class Like extends Model
 
     public const COLUMN_ID = 'id';
     public const COLUMN_LIKE = 'like';
+    public const COLUMN_PLANT_ID = 'plant_id';
     public const COLUMN_USER_ID = 'user_id';
 
     protected $table = self::TABLE_NAME;
@@ -21,11 +22,17 @@ class Like extends Model
     protected $fillable = [
         self::COLUMN_ID,
         self::COLUMN_LIKE,
+        self::COLUMN_PLANT_ID,
         self::COLUMN_USER_ID,
     ];
 
     public function user()
     {
         return $this->hasOne(User::class);
+    }
+
+    public function plant()
+    {
+        return $this->belongsTo(Plant::class, Like::COLUMN_PLANT_ID, Plant::COLUMN_ID);
     }
 }

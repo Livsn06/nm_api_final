@@ -53,4 +53,19 @@ class LikeController extends Controller
         $like->delete();
         return response()->json(['message' => 'Like deleted successfully']);
     }
+
+
+
+    static function getLikeByID($likes)
+    {
+
+        $data = $likes->map(function ($like) {
+            return [
+                'id' => $like->id,
+                'like' => $like->like,
+                'users' => UserController::getUserByID($like->user_id),
+            ];
+        });
+        return $data;
+    }
 }

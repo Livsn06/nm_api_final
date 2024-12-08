@@ -71,4 +71,13 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Session accepted'], 200);
     }
+
+    static function sessionAuth(Request $request)
+    {
+        $user = $request->user();
+        if ($user == null) {
+            return response()->json(['message' => 'Session not accepted'], 422);
+        }
+        return response()->json(['message' => 'User fetch successfully', 'data' => $user], 200);
+    }
 }

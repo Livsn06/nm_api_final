@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AdminWork;
 use App\Models\Plant;
 use App\Models\PlantAddition;
 use App\Models\User;
@@ -19,8 +20,9 @@ return new class extends Migration
             $table->id();
             $table->string(Workplace::COLUMN_WORKPLACE_NAME)->nullable();
             $table->foreignId(Workplace::COLUMN_PLANT_ADDITION_ID)->nullable()->constrained(PlantAddition::TABLE_NAME)->onDelete('cascade');
-            $table->foreignId(Workplace::COLUMN_PLANT_ID)->nullable()->constrained(Plant::TABLE_NAME)->onDelete('cascade');
+            $table->foreignId(Workplace::COLUMN_WORK_ID)->nullable()->constrained(AdminWork::TABLE_NAME)->onDelete('cascade');
             $table->foreignId(Workplace::COLUMN_ADMIN_ID)->nullable()->constrained(User::TABLE_NAME)->onDelete('cascade');
+            $table->string(Workplace::COLUMN_STATUS)->nullable(false)->default('accepted');
             $table->timestamps();
         });
     }

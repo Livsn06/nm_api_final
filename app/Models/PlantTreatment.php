@@ -23,13 +23,8 @@ class PlantTreatment extends Model
         self::COLUMN_TREATMENT_ID
     ];
 
-    public function plant()
+    public function ailment()
     {
-        return $this->hasMany(Plant::class);
-    }
-
-    public function treatment()
-    {
-        return $this->belongsTo(Ailment::class, Ailment::COLUMN_ID, PlantTreatment::COLUMN_TREATMENT_ID);
+        return $this->belongsTo(Ailment::class, PlantTreatment::COLUMN_TREATMENT_ID,  Ailment::COLUMN_ID);
     }
 }

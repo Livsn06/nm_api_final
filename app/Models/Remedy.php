@@ -20,7 +20,7 @@ class Remedy extends Model
     public const COLUMN_STATUS = 'status';
     public const COLUMN_USAGE = 'usage_remedy';
     public const COLUMN_SIDE_EFFECT = 'side_effect';
-    public const COLUMN_IMAGE = 'image';
+    public const COLUMN_IMAGE = 'images';
 
 
     protected $table = self::TABLE_NAME;
@@ -38,5 +38,20 @@ class Remedy extends Model
     public function treatments()
     {
         return $this->hasMany(RemedyTreatment::class);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function remedy_plants()
+    {
+        return $this->hasMany(RemedyPlant::class);
+    }
+
+    public function remedy_ingredients()
+    {
+        return $this->hasMany(RemedyIngredient::class);
     }
 }

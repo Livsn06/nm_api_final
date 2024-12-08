@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Remedy;
 use App\Http\Requests\StoreRemedyRequest;
 use App\Http\Requests\UpdateRemedyRequest;
+use App\Models\Ailment;
+use App\Models\Rating;
 
 class RemedyController extends Controller
 {
@@ -13,8 +15,28 @@ class RemedyController extends Controller
      */
     public function index()
     {
-        $remedies = Remedy::with("treatments")->get();
-        return response()->json(['message' => 'Remedy fetch successfully', 'data' => $remedies], 200);
+        $remedies = Remedy::with("remedy_ingredients", "remedy_plants", "treatments", "ratings")->get();
+
+        $data = $remedies->map(function ($remedy) {
+            return [
+                Remedy::COLUMN_ID => $remedy->id,
+                Remedy::COLUMN_NAME => $remedy->name,
+                Remedy::COLUMN_TYPE => $remedy->type,
+                Remedy::COLUMN_DESCRIPTION => $remedy->description,
+                Remedy::COLUMN_STATUS => $remedy->status,
+                'average_rating' => RatingController::getAverageRating($remedy->ratings),
+                'ingredients' => IngredientController::getRemedyIngredients($remedy->remedy_ingredients),
+                Remedy::COLUMN_STEP => json_decode($remedy->step),
+                Remedy::COLUMN_SIDE_EFFECT => json_decode($remedy->side_effect),
+                Remedy::COLUMN_USAGE => json_decode($remedy->usage_remedy),
+                Remedy::COLUMN_IMAGE => ImageController::imageFullPath($remedy->image),
+                'user_ratings' => RatingController::getRating($remedy->ratings),
+                'treatments' => AilmentController::ailmentToArray($remedy->treatments),
+                'tagged_plants' => PlantController::getRemedyPlants($remedy->remedy_plants),
+            ];
+        });
+
+        return response()->json(['message' => 'Remedy fetch successfully', 'data' => $data], 200);
     }
 
     /**

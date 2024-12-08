@@ -15,7 +15,8 @@ class PlantAddition extends Model
     public const COLUMN_NAME = 'name';
     public const COLUMN_SCIENTIFIC_NAME = 'scientific_name';
     public const COLUMN_DESCRIPTION = 'description';
-    public const COLUMN_IMAGE = 'image';
+    public const COLUMN_IMAGE = 'images';
+    public const COLUMN_USER_ID = 'user_id';
 
     protected $table = self::TABLE_NAME;
     protected $fillable = [
@@ -23,5 +24,6 @@ class PlantAddition extends Model
         self::COLUMN_SCIENTIFIC_NAME,
         self::COLUMN_DESCRIPTION,
         self::COLUMN_IMAGE,
+        self::COLUMN_USER_ID
     ];
 }

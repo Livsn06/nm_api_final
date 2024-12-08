@@ -25,11 +25,11 @@ class RemedyPlant extends Model
 
     public function remedy()
     {
-        return $this->hasMany(Remedy::class, Remedy::COLUMN_ID, RemedyPlant::COLUMN_REMEDY_ID);
+        return $this->belongsTo(Remedy::class, RemedyPlant::COLUMN_REMEDY_ID, Remedy::COLUMN_ID);
     }
 
     public function plant()
     {
-        return $this->hasMany(Plant::class, Plant::COLUMN_ID, RemedyPlant::COLUMN_PLANT_ID);
+        return $this->belongsTo(Plant::class, RemedyPlant::COLUMN_PLANT_ID, Plant::COLUMN_ID);
     }
 }

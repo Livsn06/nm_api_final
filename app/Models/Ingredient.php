@@ -20,4 +20,9 @@ class Ingredient extends Model
     protected $fillable = [
         self::COLUMN_NAME,
     ];
+
+    public function remedies()
+    {
+        return $this->belongsTo(RemedyIngredient::class);
+    }
 }

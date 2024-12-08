@@ -35,4 +35,11 @@ class UserController extends Controller
         $users = User::where('role', $role)->get();
         return response()->json(['message' => 'User role fetch successfully', 'data' => $users], 200);
     }
+
+
+    static function getUserByID($id)
+    {
+        $user = User::find($id);
+        return $user;
+    }
 }

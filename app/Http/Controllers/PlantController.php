@@ -14,8 +14,26 @@ class PlantController extends Controller
      */
     public function index()
     {
-        $plants = Plant::with("treatments")->get();
-        return response()->json(['message' => 'Plant fetch successfully', 'data' => $plants], 200);
+
+        $plants = Plant::with("likes", "treatments", "remedy_plants")->get();
+
+        // return list of image as memory
+        $data = $plants->map(function ($plant) {
+            return [
+                Plant::COLUMN_ID => $plant->id,
+                Plant::COLUMN_NAME => $plant->name,
+                Plant::COLUMN_SCIENTIFIC_NAME => $plant->scientific_name,
+                Plant::COLUMN_LOCAL_NAME => $plant->local_name,
+                Plant::COLUMN_DESCRIPTION => $plant->description,
+                'total_likes' => $plant->likes->count(),
+                Plant::COLUMN_STATUS => $plant->status,
+                Plant::COLUMN_IMAGE => ImageController::imageFullPath($plant->image_path),
+                'treatments' => AilmentController::ailmentToArray($plant->treatments),
+                'likes' => LikeController::getLikeByID($plant->likes),
+
+            ];
+        });
+        return response()->json(['message' => 'Plant fetch successfully', 'data' => $data], 200);
     }
 
     /**
@@ -134,5 +152,36 @@ class PlantController extends Controller
         foreach (json_decode($plant->images) as $image) {
             Storage::disk('public')->delete($image);
         }
+    }
+
+
+
+
+    static function getRemedyPlants($remedy_plants)
+    {
+
+        $data = $remedy_plants->map(function ($remedy_plant) {
+            return PlantController::getPlantByID($remedy_plant->plant_id);
+        });
+
+        return $data;
+    }
+
+    static function getPlantByID($id)
+    {
+        $plant = Plant::find($id);
+
+        $data = [
+            Plant::COLUMN_ID => $plant->id,
+            Plant::COLUMN_NAME => $plant->name,
+            Plant::COLUMN_SCIENTIFIC_NAME => $plant->scientific_name,
+            Plant::COLUMN_LOCAL_NAME => $plant->local_name,
+            Plant::COLUMN_DESCRIPTION => $plant->description,
+            Plant::COLUMN_STATUS => $plant->status,
+            Plant::COLUMN_IMAGE => ImageController::imageFullPath($plant->image_path),
+            'treatments' => AilmentController::ailmentToArray($plant->treatments),
+
+        ];
+        return $data;
     }
 }

@@ -23,6 +23,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::prefix('v1')->group(function () {
+    Route::apiResource('plants/free', PlantController::class);
     Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('plants', PlantController::class);
 
@@ -48,5 +49,9 @@ Route::prefix('v1')->group(function () {
 
         // 
         Route::apiResource('remedies/plantTags', RemedyPlantController::class);
+
+
+        //
+        Route::post('/users/sessions', [AuthController::class, 'sessionAuth']);
     });
 });
